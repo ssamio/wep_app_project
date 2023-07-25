@@ -41,7 +41,7 @@ router.post('/post', textValidate(), titleValidate(), passport.authenticate('jwt
         return res.status(500).json({error: "Failed to create post!"});
     }
 });
-//DELETE for post
+//DELETE for post. Also removes all comments that belong to that post
 router.delete('/post/:postId', passport.authenticate('jwt', {session: false}), async(req, res) =>{
     try{
         const post = await Post.findById(req.params.postId);
@@ -50,6 +50,7 @@ router.delete('/post/:postId', passport.authenticate('jwt', {session: false}), a
         req.user.then(userData => {
             if(userData._id.equals(post.user) || userData.adminStatus === true){
                 post.deleteOne();
+                Comment.deleteMany({post: post._id});
                 return res.status(200).json({message: "Post deleted!"});
 
             }
@@ -170,8 +171,21 @@ router.delete('/user/:userId', passport.authenticate('jwt', {session: false}), a
 
         req.user.then(userData => {
             if(userData._id.equals(user._id) || userData.adminStatus === true){
+                //Delete user
                 user.deleteOne();
-                return res.status(200).json({message: "User deleted. Goodbye!"});
+                //Find all posts the user has made
+                const userPosts = Post.find({user: user._id});
+                //Delete all posts the user has made
+                Post.deleteMany({user: user._id});
+                //Delete all comments the user has made
+                Comment.deleteMany({user: user._id});
+                
+                //Delete all comments from posts that no longer exist
+                for(let i = 0; i < userPosts.length; i++){
+                    Comment.deleteMany({post: userPosts[i]._id});
+                }
+                
+                return res.status(200).json({message: "User deleted. Goodbye! :)"});
             }
             else{
                 return res.status(403).json({error: "You are not authorized"});
