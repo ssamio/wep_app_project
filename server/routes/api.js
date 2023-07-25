@@ -1,7 +1,7 @@
 //The main API routes for the application
 var express = require('express');
 var router = express.Router();
-const { body, validationResult } = require('express-validator');
+const { body } = require('express-validator');
 const passport = require('passport');
 const User = require('../models/User');
 const Post = require('../models/Post');
