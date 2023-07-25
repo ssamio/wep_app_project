@@ -8,13 +8,18 @@ let commentSchema = new Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
-        required: true
+        required: true,
+        ref: 'User'
     },
     post: {
         type: Schema.Types.ObjectId,
-        required: true
-    },
-    timestamp: true
-});
+        required: true,
+        ref: 'Post'
+    }
+},
+{
+    timestamps: true
+}
+);
 
 module.exports = mongoose.model("Comment", commentSchema, "comments");
