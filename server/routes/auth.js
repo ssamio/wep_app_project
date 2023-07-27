@@ -79,7 +79,8 @@ router.post('/login', emailValidate(), passwordValidate(), async(req, res) =>{
             const token = jwt.sign({
               email: user.email,
               id: user._id,
-              username: user.username
+              username: user.username,
+              adminStatus: user.adminStatus
             },
             process.env.SECRET,
             {
