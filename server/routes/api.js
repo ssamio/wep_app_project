@@ -153,6 +153,9 @@ router.put('/user/:userId', usernameValidate(), passport.authenticate('jwt', {se
         if(!targetUser){return res.status(404).json({error: "User not found"});}
 
         const username = req.body.username;
+        const preExist = await User.findOne({username: username});
+        if(preExist) return res.status(403).json({error: "Username taken!"});
+        
         req.user.then(userData => {
             const activeUser = User.findById(userData._id);
             if(activeUser._id.equals(targetUser._id) || activeUser.adminStatus === true){

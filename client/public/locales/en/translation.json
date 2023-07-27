@@ -1,5 +1,12 @@
 {
+    "Register": "Register",
+    "Login": "Login",
+    "Logout": "Logout",
     "Home": "Home",
-    "About": "About",
-    "Home page": "This is the front page"
+    "Sami": "Sami made this",
+    "Admin": "Admin",
+    "Login title": "Login to service",
+    "Email": "Email",
+    "Password": "Password",
+    "Register title": "Register to service"
 }

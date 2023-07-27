@@ -21,12 +21,12 @@ router.post('/register', emailValidate(), passwordValidate(), async (req, res) =
   //Validate email and password
   const errors = validationResult(req);
   if(!errors.isEmpty()){
-    return res.status(400).json({errors: errors.array()});
+    return res.status(400).json({error: errors.array()});
   }
 
   const query = await User.findOne({ email: req.body.email}).exec();
   if(query){
-    return res.status(403).json({message: "Email registered already!"}); 
+    return res.status(403).json({error: "Email registered already!"}); 
   }
   else{
     let username;
@@ -43,7 +43,7 @@ router.post('/register', emailValidate(), passwordValidate(), async (req, res) =
     })
     .then(ok =>{
       if(!ok){
-        return res.status(500).json({message: "User registering failed!"});
+        return res.status(500).json({error: "User registering failed!"});
       }
       else{
         return res.status(200).json({message: "User registered succesfully!"});
@@ -57,7 +57,7 @@ router.post('/login', emailValidate(), passwordValidate(), async(req, res) =>{
   //Validate email and password 
   const errors = validationResult(req);
   if(!errors.isEmpty()){
-    return res.status(400).json({errors: errors.array()});
+    return res.status(400).json({error: errors.array()});
   }
   try{
     const { email, password } = req.body;
@@ -65,7 +65,7 @@ router.post('/login', emailValidate(), passwordValidate(), async(req, res) =>{
     User.findOne({email: email}).exec()
     .then(user => {
       if(!user){
-        return res.status(400).json({message: "Invalid email or password"});
+        return res.status(400).json({error: "Invalid email or password"});
       }
       else{
         bcrypt.compare(password, user.password, (err, isMatch) =>{
@@ -73,7 +73,7 @@ router.post('/login', emailValidate(), passwordValidate(), async(req, res) =>{
             throw err;
           }
           else if(!isMatch){
-            return res.status(400).json({message: "Invalid email or password"});
+            return res.status(400).json({error: "Invalid email or password"});
           }
           else{
             const token = jwt.sign({

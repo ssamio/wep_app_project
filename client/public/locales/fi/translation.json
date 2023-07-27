@@ -1,5 +1,12 @@
 {
-    "Home": "Kotisivu",
-    "About": "Tietoa",
-    "Home page": "Tämä on etusivu"
+    "Register": "Rekisteröidy",
+    "Login": "Kirjaudu",
+    "Logout": "Kirjaudu ulos",
+    "Home": "Etusivu",
+    "Sami": "Sami teki tämän",
+    "Admin": "Ylläpito",
+    "Login title": "Kirjaudu sisään",
+    "Email": "Sähköposti",
+    "Password": "Salasana",
+    "Register title": "Rekisteröidy palveluun"
 }
