@@ -1,7 +1,7 @@
 //The main API routes for the application
 var express = require('express');
 var router = express.Router();
-const { body } = require('express-validator');
+const { body, validationResult } = require('express-validator');
 const passport = require('passport');
 const User = require('../models/User');
 const Post = require('../models/Post');
@@ -27,6 +27,11 @@ router.get('/comments/:postId', async(req, res) =>{
 
 //POST for new post
 router.post('/post', textValidate(), titleValidate(), passport.authenticate('jwt', {session: false}), async(req, res) =>{
+    //Validate content
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({error: "Invalid content"});
+    }
     try{
         const { title, text} = req.body;
         let ID;
@@ -66,6 +71,11 @@ router.delete('/post/:postId', passport.authenticate('jwt', {session: false}), a
 });
 //PUT for post
 router.put('/post/:postId', textValidate(), titleValidate(), passport.authenticate('jwt', {session: false}), async(req, res) =>{
+    //Validate content
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({error: "Invalid content"});
+    }
     try{
         const post = await Post.findById(req.params.postId);
         if(!post){return res.status(404).json({error: "Post not found"});}
@@ -88,6 +98,11 @@ router.put('/post/:postId', textValidate(), titleValidate(), passport.authentica
 });
 //POST for new comment
 router.post('/comment', textValidate(), postIDValidate(), passport.authenticate('jwt', {session: false}), (req, res) =>{
+    //Validate content
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({error: "Invalid content"});
+    }
     try{
         const { text, post } = req.body;
         let ID;
@@ -126,6 +141,11 @@ router.delete('/comment/:commentId', passport.authenticate('jwt', {session: fals
 });
 //PUT for comment
 router.put('/comment/:commentId', textValidate(), passport.authenticate('jwt', {session: false}), async(req, res) =>{
+    //Validate content
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({error: "Invalid content"});
+    }
     try{
         const comment = await Comment.findById(req.params.commentId);
         if(!comment){return res.status(404).json({error: "Comment not found"});}
@@ -148,6 +168,11 @@ router.put('/comment/:commentId', textValidate(), passport.authenticate('jwt', {
 });
 //UPDATE for user to set their username. Features many redundant checks just to be sure, and allowing the super admin to change other users' names :D
 router.put('/user/:userId', usernameValidate(), passport.authenticate('jwt', {session: false}), async(req, res) =>{
+    //Validate content
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({error: "Invalid content"});
+    }
     try{
         const targetUser = await User.findById(req.params.userId);
         if(!targetUser){return res.status(404).json({error: "User not found"});}
