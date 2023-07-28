@@ -31,11 +31,11 @@ const LoginPage = () => {
     const handleLogin = async () => {
         if(!loginState){
             const credentials = { email, password };
-            const result = await login(credentials);
-            if(result){
-                return navigate("/");
+            const response = await login(credentials);
+            if(response){
+                navigate('/');
+                return alert(response);
             }
-            return null; 
         }        
     }; 
 

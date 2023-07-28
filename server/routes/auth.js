@@ -21,7 +21,7 @@ router.post('/register', emailValidate(), passwordValidate(), async (req, res) =
   //Validate email and password
   const errors = validationResult(req);
   if(!errors.isEmpty()){
-    return res.status(400).json({error: errors.array()});
+    return res.status(400).json({error: "Email needs to be a proper email. Password needs to have minimum 8 characters, one capital letter, one small letter, one number and one symbol."});
   }
 
   const query = await User.findOne({ email: req.body.email}).exec();
@@ -46,7 +46,7 @@ router.post('/register', emailValidate(), passwordValidate(), async (req, res) =
         return res.status(500).json({error: "User registering failed!"});
       }
       else{
-        return res.status(200).json({message: "User registered succesfully!"});
+        return res.status(200).json({message: "User registered succesfully! Please login."});
       }
     });
   }
@@ -57,7 +57,7 @@ router.post('/login', emailValidate(), passwordValidate(), async(req, res) =>{
   //Validate email and password 
   const errors = validationResult(req);
   if(!errors.isEmpty()){
-    return res.status(400).json({error: errors.array()});
+    return res.status(400).json({error: "Invalid email or password"});
   }
   try{
     const { email, password } = req.body;

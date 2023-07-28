@@ -50,31 +50,39 @@ export const logout = () => {
 
 //Login, on success save the token to local storage
 export const login = async(credentials) => {
-    try {
-        const response = await auth.post('/login', credentials);
-        if(response.data.token){
-            localStorage.setItem('auth_token', response.data.token);
-            return response.data.message;
+    let response;
+    await auth.post('/login', credentials,{
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
         }
-        else{
-            return response.data.error;
-        }
-    }
-    catch (error){
-        console.error('Login failed: ', error);
-    }
+    })
+    .then(({data}) => {
+        localStorage.setItem('auth_token', data.token);
+        response = data.message;
+    })
+    .catch((error) => {
+        alert(error.response.data.error);
+        response = null;
+    })
+    return response;
 }
+
+//Register new user, password needs to be strong 
 export const register = async(credentials) => {
-    try {
-        const response = await auth.post('/register', credentials);
-        if(response.data.message){
-            return response.data.message;
+    let response;
+    await auth.post('/register', credentials,{
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
         }
-        else{
-            return response.data.error;
-        }
-    }
-    catch (error){
-        console.error('Registration failed: ', error);
-    }
-}
+    })
+    .then(({data}) => {
+        response = data.message;
+    })
+    .catch((error) => {
+        alert(error.response.data.error);
+        response = null;
+    })
+    return response;
+ }
