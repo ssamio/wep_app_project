@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { TextField, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material";
+import { useSnackbar } from "./SnackbarContext";
 
 //custom component for form
 const FormContainer = styled('form')(({ theme }) => ({
@@ -23,6 +24,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [loginState, setLoginState] = useState(false);
     const navigate = useNavigate();
+    const { showSnackbar } = useSnackbar();
 //Check user's login status. Logged in user's cannot submit the login form
     useEffect(() => {
         setLoginState(checkAuth());
@@ -35,9 +37,12 @@ const LoginPage = () => {
         if(!loginState){
             const credentials = { email, password };
             const response = await login(credentials);
-            if(response){
-                navigate('/');
-                return alert(response);
+            if(response === true){
+                showSnackbar((t('Register success')), 'success');
+                return navigate('/');
+            }
+            else{
+                return showSnackbar((t(response)), 'error');
             }
         }        
     }; 

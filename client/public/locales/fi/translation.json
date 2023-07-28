@@ -9,5 +9,22 @@
     "Email": "Sähköposti",
     "Password": "Salasana",
     "Register title": "Rekisteröidy palveluun",
-    "User settings": "Käyttäjän asetukset"
+    "User settings": "Käyttäjän asetukset",
+    "Settings title": "Hei, ",
+    "Username change": "Vaihda käyttäjänimesi",
+    "Username": "Käyttäjänimi",
+    "Submit": "Lähetä",
+    "Delete user": "Poista käyttäjäsi",
+    "Delete": "Poista",
+    "Danger": "Vaara!",
+    "Please": "Kirjaudu sisään",
+    "Success": "Onnistui!",
+    "Failure": "Epäonnistui!",
+    "Credential validation error": "Sähköpostin on oltava sähköpostiosoite. Salasanan on oltava vähintään 8 merkkiä pitkä sekä sisältää yksi suuri ja yksi pieni kirjain, numero sekä merkki.",
+    "Duplicate error": "Käyttäjä tai käyttäjänimi on jo olemassa.",
+    "Register success": "Käyttäjä rekisteröity onnistuneesti! Ole hyvä ja kirjaudu sisään.",
+    "Invalid credetials": "Virheelliset tunnukset",
+    "Not found": "Ei löydy",
+    "User deleted": "Käyttäjä poistettu! Hyvästi :)",
+    "Username changed": "Käyttäjänimi päivitetty! Kirjaudu uudestaan sisään nähdäksesi muutokset."
 }

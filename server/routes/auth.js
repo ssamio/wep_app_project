@@ -21,12 +21,12 @@ router.post('/register', emailValidate(), passwordValidate(), async (req, res) =
   //Validate email and password
   const errors = validationResult(req);
   if(!errors.isEmpty()){
-    return res.status(400).json({error: "Email needs to be a proper email. Password needs to have minimum 8 characters, one capital letter, one small letter, one number and one symbol."});
+    return res.status(400).json({error: "Credential validation error"});
   }
 
   const query = await User.findOne({ email: req.body.email}).exec();
   if(query){
-    return res.status(403).json({error: "Email registered already!"}); 
+    return res.status(403).json({error: "Duplicate error"}); 
   }
   else{
     let username;
@@ -43,10 +43,10 @@ router.post('/register', emailValidate(), passwordValidate(), async (req, res) =
     })
     .then(ok =>{
       if(!ok){
-        return res.status(500).json({error: "User registering failed!"});
+        return res.status(500).json({error: "Failure"});
       }
       else{
-        return res.status(200).json({message: "User registered succesfully! Please login."});
+        return res.sendStatus(200);
       }
     });
   }
@@ -57,7 +57,7 @@ router.post('/login', emailValidate(), passwordValidate(), async(req, res) =>{
   //Validate email and password 
   const errors = validationResult(req);
   if(!errors.isEmpty()){
-    return res.status(400).json({error: "Invalid email or password"});
+    return res.status(400).json({error: "Invalid credentials"});
   }
   try{
     const { email, password } = req.body;
@@ -65,7 +65,7 @@ router.post('/login', emailValidate(), passwordValidate(), async(req, res) =>{
     User.findOne({email: email}).exec()
     .then(user => {
       if(!user){
-        return res.status(400).json({error: "Invalid email or password"});
+        return res.status(400).json({error: "Invalid credentials"});
       }
       else{
         bcrypt.compare(password, user.password, (err, isMatch) =>{
@@ -73,7 +73,7 @@ router.post('/login', emailValidate(), passwordValidate(), async(req, res) =>{
             throw err;
           }
           else if(!isMatch){
-            return res.status(400).json({error: "Invalid email or password"});
+            return res.status(400).json({error: "Invalid credentials"});
           }
           else{
             const token = jwt.sign({
@@ -86,7 +86,7 @@ router.post('/login', emailValidate(), passwordValidate(), async(req, res) =>{
             {
               expiresIn: "1h",
             });
-            res.status(200).json({message: "Login success!", token});
+            res.status(200).json({token});
           }
         });
       }

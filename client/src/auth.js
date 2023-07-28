@@ -59,6 +59,23 @@ export const getID = () => {
     }
 }
 
+//Function that returns the username
+export const getUsername = () => {
+    const token = localStorage.getItem("auth_token");
+
+    if(!token){
+        return null;
+    }
+
+    else{
+        const decoded = jwt_decode(token);
+        if(decoded.username === undefined) return null;
+        else{
+            return decoded.username;
+        }
+    }
+}
+
 //Logout the user by deleting the token
 export const logout = () => {
     return localStorage.removeItem("auth_token");
@@ -75,11 +92,10 @@ export const login = async(credentials) => {
     })
     .then(({data}) => {
         localStorage.setItem('auth_token', data.token);
-        response = data.message;
+        response = true;
     })
     .catch((error) => {
-        alert(error.response.data.error);
-        response = null;
+        response = error.response.data.error;
     })
     return response;
 }
@@ -94,11 +110,10 @@ export const register = async(credentials) => {
         }
     })
     .then(({data}) => {
-        response = data.message;
+        response = true;
     })
     .catch((error) => {
-        alert(error.response.data.error);
-        response = null;
+        response = error.response.data.error;
     })
     return response;
  }

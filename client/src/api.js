@@ -8,11 +8,69 @@ const api = axios.create({
 });
 //Fetch all posts 
 export const getPosts = async() => {
-    const response = await api.get('/posts');
-    return response.data;
+    let response;
+    await api.get('/posts')
+    .then(({data}) => {
+        response = data;
+    })
+    .catch((error) => {
+        response = null;
+        console.log(error.response.data.error);
+    })
+    return response;
 }
 //Fetch comments of a given post
 export const getComments = async(postId) => {
-    const response = await api.get('/comments'+ postId);
-    return response.data;
+    let response; 
+    await api.get('/comments/'+ postId)
+    .then(({data}) => {
+        response = data;
+    })
+    .catch((error) => {
+        response = null;
+        console.log(error.response.data.error);
+    });
+    return response;
+}
+//Change username API call
+export const changeUsername = async(userId, username) => {
+    let response;
+    const token = localStorage.getItem("auth_token");
+    if(!token) return null;
+    await api.put('/user/' + userId, username,{
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(({data}) => {
+        console.log(data.message);
+        response = true;
+    })
+    .catch((error) =>{
+        response = false;
+        console.log(error.response.data.error);
+    })
+    return response;
+}
+//Delete user API call
+export const deleteUser = async(userId) => {
+    let response;
+    const token = localStorage.getItem("auth_token");
+    if(!token) return null;
+    await api.delete('/user/' + userId,{
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(({data}) => {
+        console.log(data.message);
+        response = true;
+    })
+    .catch((error) =>{
+        response = false;
+        console.log(error.response.data.error);
+    })
+    return response;
 }

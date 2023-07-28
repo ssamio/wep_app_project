@@ -9,5 +9,22 @@
     "Email": "Email",
     "Password": "Password",
     "Register title": "Register to service",
-    "User settings": "User settings"
+    "User settings": "User settings",
+    "Settings title": "Hello, ",
+    "Username change": "Change username",
+    "Username": "Username",
+    "Submit": "Submit",
+    "Delete user": "Delete your user",
+    "Delete": "Delete",
+    "Danger": "Danger!",
+    "Please": "Please log in",
+    "Success": "Success!",
+    "Failure": "Failure!",
+    "Credential validation error": "Email needs to be a proper email. Password needs to have minimum 8 characters, one capital letter, one small letter, one number and one symbol.",
+    "Duplicate error": "User or username exists already.",
+    "Register success": "User registered succesfully! Please login.",
+    "Invalid credetials": "Invalid credentials",
+    "Not found": "Not found",
+    "User deleted": "User deleted! Goodbye :)",
+    "Username changed": "Username updated! Login again to apply changes."
 }
