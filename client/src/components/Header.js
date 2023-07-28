@@ -111,7 +111,7 @@ const Header = () => {
                                 <Button component={Link} to="/user" color="inherit">
                                     {t('User settings')}
                                 </Button>
-                                <Button onClick={handleLogOut} color="inherit">
+                                <Button onClick={handleLogOut} color="error">
                                     {t('Logout')}
                                 </Button>
                                 </>
