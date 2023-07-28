@@ -1,3 +1,4 @@
+//Login page
 import { checkAuth, login } from "../auth";
 import { useState, useEffect, Suspense } from "react";
 import { useNavigate } from 'react-router';
@@ -5,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { TextField, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material";
 
+//custom component for form
 const FormContainer = styled('form')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -21,13 +23,14 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [loginState, setLoginState] = useState(false);
     const navigate = useNavigate();
-
+//Check user's login status. Logged in user's cannot submit the login form
     useEffect(() => {
         setLoginState(checkAuth());
     }, [checkAuth()])
 
     const { t, i18n } = useTranslation();
 
+//Handle login, on success navigates to front page and displays an alert with success message. On failure show failure alert to user.
     const handleLogin = async () => {
         if(!loginState){
             const credentials = { email, password };
@@ -38,7 +41,7 @@ const LoginPage = () => {
             }
         }        
     }; 
-
+//Simple login form using the custom component
     return (
         <FormContainer>
             <Typography>{t('Login title')}</Typography>

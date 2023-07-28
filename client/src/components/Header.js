@@ -7,6 +7,7 @@ import { styled } from '@mui/material/styles';
 import { checkAuth, checkAdmin, logout } from '../auth';
 import { useNavigate } from 'react-router';
 
+//Custom components for the header
 const CustomToolbar = styled(Toolbar)(({ theme }) => ({
         backgroundColor: '#282b30', 
         color: '#c1c1c1',
@@ -37,19 +38,19 @@ const Header = () => {
     const [loginState, setLoginState] = useState(false);
     const [adminState, setAdminState] = useState(false);
     const navigate = useNavigate();
-
+//Track user's login and admin status
     useEffect(() => {
         setLoginState(checkAuth());
         setAdminState(checkAdmin());
     }, [checkAuth(), checkAdmin()])
 
-
+//The header handles translation change and user login/logout. Uses function fropm auth to achieve this.
     const { t, i18n } = useTranslation();
 
     const changeLanguage = (lang) =>{
         i18n.changeLanguage(lang);
     }
-
+//Menu interaction functions
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -57,7 +58,7 @@ const Header = () => {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
-
+//Handle user logout
     const handleLogOut = () => {
         const status = checkAuth();
         if(status){
@@ -69,24 +70,25 @@ const Header = () => {
             return null;
         }
     }
-
+//Memo used to display menu items in collapsed menu
     const menuItems = useMemo(() => {
         const items = [];
         items.push(<MenuItem key={0} component={Link} to="/" onClick={handleMenuClose}>{t('Home')}</MenuItem>);
         if(loginState){
-            items.push(<MenuItem key={1} onClick={() => {handleMenuClose(); handleLogOut()}}>{t('Logout')}</MenuItem>);
+            items.push(<MenuItem key={1} component={Link} to="/user" onClick={handleMenuClose}>{t('User settings')}</MenuItem>)
+            items.push(<MenuItem key={2} onClick={() => {handleMenuClose(); handleLogOut()}}>{t('Logout')}</MenuItem>);
         }
         if(adminState){
-            items.push(<MenuItem key={2} component={Link} to="/admin" onClick={handleMenuClose()}>{t('Admin')}</MenuItem>);
+            items.push(<MenuItem key={3} component={Link} to="/admin" onClick={handleMenuClose()}>{t('Admin')}</MenuItem>);
         }
         if(!loginState){
-            items.push(<MenuItem key={3} component={Link} to="/register" onClick={handleMenuClose}>{t('Register')}</MenuItem>)
-            items.push(<MenuItem key={4} component={Link} to="/login" onClick={handleMenuClose}>{t('Login')}</MenuItem>)
+            items.push(<MenuItem key={4} component={Link} to="/register" onClick={handleMenuClose}>{t('Register')}</MenuItem>)
+            items.push(<MenuItem key={5} component={Link} to="/login" onClick={handleMenuClose}>{t('Login')}</MenuItem>)
         }
         return items;
     }, [loginState, adminState]);
 
-
+//Header with conditional buttons, depending on the user's login and admin states. Displays a collapsed menu if screen size is small enough
     return (
         <ResponsiveAppBar position="static">
             <CustomToolbar >
@@ -98,8 +100,7 @@ const Header = () => {
                     onClick={handleMenuOpen}
                 >
                     <MenuIcon />
-                </IconButton>
-               
+                </IconButton>          
                     <div className="menu-items">
                         <Button component={Link} to="/" color="inherit">
                             {t('Home')}
@@ -107,6 +108,9 @@ const Header = () => {
                         {
                             loginState ? 
                                 <>
+                                <Button component={Link} to="/user" color="inherit">
+                                    {t('User settings')}
+                                </Button>
                                 <Button onClick={handleLogOut} color="inherit">
                                     {t('Logout')}
                                 </Button>

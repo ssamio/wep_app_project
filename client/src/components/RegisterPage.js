@@ -1,3 +1,4 @@
+//Registration page
 import { checkAuth, register } from "../auth";
 import { useState, useEffect, Suspense } from "react";
 import { useNavigate } from 'react-router';
@@ -5,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { TextField, Button, Typography } from "@mui/material";
 import { styled } from "@mui/material";
 
+//Custom component for the form
 const FormContainer = styled('form')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -21,13 +23,13 @@ const RegisterPage = () => {
     const [password, setPassword] = useState('');
     const [loginState, setLoginState] = useState(false);
     const navigate = useNavigate();
-
+//Check user login state. Logged in user's cannot submit the form.
     useEffect(() => {
         setLoginState(checkAuth());
     }, [checkAuth()])
 
     const { t, i18n } = useTranslation();
-
+//Handle user registration. On success redirect to login page and show success alert. On failure show failure alert.
     const handleRegister = async () => {
         if(!loginState){
             const credentials = { email, password };
@@ -40,7 +42,7 @@ const RegisterPage = () => {
             return null; 
         }        
     }; 
-
+//Registration form using the custom component
     return (
         <FormContainer>
             <Typography>{t('Register title')}</Typography>

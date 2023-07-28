@@ -1,4 +1,4 @@
-//Handles authentication
+//Handles authentication 
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
@@ -42,8 +42,24 @@ export const checkAdmin = () => {
         else if (decoded.adminStatus === true) return true;
     }
 }
+//Function that returns the userID. Is used for conditionally rendering stuff.
+export const getID = () => {
+    const token = localStorage.getItem("auth_token");
 
-//Logout
+    if(!token){
+        return null;
+    }
+
+    else{
+        const decoded = jwt_decode(token);
+        if(decoded.id === undefined) return null;
+        else{
+            return decoded.id;
+        }
+    }
+}
+
+//Logout the user by deleting the token
 export const logout = () => {
     return localStorage.removeItem("auth_token");
 }
@@ -68,7 +84,7 @@ export const login = async(credentials) => {
     return response;
 }
 
-//Register new user, password needs to be strong 
+//Register new user, password needs to be strong and email needs to be proper email.  
 export const register = async(credentials) => {
     let response;
     await auth.post('/register', credentials,{

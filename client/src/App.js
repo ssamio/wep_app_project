@@ -9,7 +9,9 @@ import Footer from './components/Footer';
 import { styled } from '@mui/material/styles';
 import Admin from './components/Admin';
 import Comments from './components/Comments';
+import UserSettings from './components/UserSettings';
 
+//Make app responsive to screen size
 const Responsive = styled('div')({
   display: 'flex',
   flexDirection: 'column',
@@ -22,7 +24,7 @@ const Responsive = styled('div')({
     },
   },
 });
-
+//App containes all routes in the application
 function App() {
   return (
     <Router>
@@ -33,6 +35,7 @@ function App() {
             <Route  path="/login" element={<><Header /> <LoginPage /> <Footer /></>}/>
             <Route  path="/post" element={<><Header /> <Comments /> <Footer /></>}/>
             <Route  path="/admin" element={<><Header /> <Admin /> <Footer /></>}/>
+            <Route  path="/user" element={<><Header /> <UserSettings /> <Footer /></>}/>
           </Routes>
         </Responsive>
       </Router>

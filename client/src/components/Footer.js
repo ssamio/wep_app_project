@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 
-
+//Custom components for footer
 const Container = styled('div')({
     width: '100%',
     position: 'fixed',
@@ -17,7 +17,7 @@ const CustomToolbar = styled(Toolbar)(({ theme }) => ({
     backgroundColor: '#282b30', 
     color: '#909090',
 }));
-
+//A sticky footer with simple text. Not much else
 const Footer = () => {
     const { t, i18n } = useTranslation();
     return (
