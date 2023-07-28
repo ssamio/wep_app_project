@@ -13,7 +13,7 @@ const postIDValidate = () => body('post').isString().exists().trim().bail();
 const usernameValidate = () => body('username').isString().exists().trim().bail();
 
 
-//GET all posts that are exist
+//GET all posts that exist
 router.get('/posts', async(req, res) => {
    const posts = await Post.find().populate('user', 'username');
    res.send(posts);
@@ -53,10 +53,9 @@ router.delete('/post/:postId', passport.authenticate('jwt', {session: false}), a
         if(!post){return res.status(404).json({error: "Post not found"});}
         
         req.user.then(userData => {
-            const activeUser = User.findById(userData._id);
-            if(activeUser._id.equals(post.user) || activeUser.adminStatus === true){
-                post.deleteOne();
-                Comment.deleteMany({post: post._id});
+            if(userData.id.equals(post.user) || userData.adminStatus === true){
+                post.deleteOne().exec();
+                Comment.deleteMany({post: post._id}).exec();
                 return res.status(200).json({message: "Post deleted!"});
 
             }
@@ -82,8 +81,7 @@ router.put('/post/:postId', textValidate(), titleValidate(), passport.authentica
 
         const {title, text} = req.body; 
         req.user.then(userData => {
-            const activeUser = User.findById(userData._id);
-            if(activeUser._id.equals(post.user) || activeUser.adminStatus === true){
+            if(userData.id.equals(post.user) || userData.adminStatus === true){
                 post.updateOne({title: title, text: text}).exec();
                 return res.status(200).json({message: "Post updated!"});
             }
@@ -124,9 +122,8 @@ router.delete('/comment/:commentId', passport.authenticate('jwt', {session: fals
         if(!comment){return res.status(404).json({error: "Comment not found"});}
 
         req.user.then(userData => {
-            const activeUser = User.findById(userData._id);
-            if(activeUser._id.equals(comment.user) || activeUser.adminStatus === true){
-                comment.deleteOne();
+            if(userData.id.equals(comment.user) || userData.adminStatus === true){
+                comment.deleteOne().exec();
                 return res.status(200).json({message: "Comment deleted!"});
 
             }
@@ -152,8 +149,7 @@ router.put('/comment/:commentId', textValidate(), passport.authenticate('jwt', {
 
         const { text} = req.body; 
         req.user.then(userData => {
-            const activeUser = User.findById(userData._id);
-            if(activeUser._id.equals(post.user) || activeUser.adminStatus === true){
+            if(userData.id.equals(post.user) || userData.adminStatus === true){
                 comment.updateOne({text: text}).exec();
                 return res.status(200).json({message: "Comment updated!"});
             }
@@ -182,8 +178,7 @@ router.put('/user/:userId', usernameValidate(), passport.authenticate('jwt', {se
         if(preExist) return res.status(403).json({error: "Username taken!"});
         
         req.user.then(userData => {
-            const activeUser = User.findById(userData._id);
-            if(activeUser._id.equals(targetUser._id) || activeUser.adminStatus === true){
+            if(userData.id.equals(targetUser._id) || userData.adminStatus === true){
                 targetUser.updateOne({username: username}).exec();
                 return res.status(200).json({message: "Username updated!"});
             }
@@ -203,20 +198,19 @@ router.delete('/user/:userId', passport.authenticate('jwt', {session: false}), a
         if(!targetUser){return res.status(404).json({error: "User not found"});}
 
         req.user.then(userData => {
-            const activeUser = User.findById(userData._id);
-            if(activeUser._id.equals(targetUser._id) || activeUser.adminStatus === true){
+            if(userData._id.equals(targetUser._id) || userData.adminStatus === true){
                 //Delete user
-                targetUser.deleteOne();
+                targetUser.deleteOne().exec();
                 //Find all posts the user has made
                 const userPosts = Post.find({user: targetUser._id});
                 //Delete all posts the user has made
-                Post.deleteMany({user: targetUser._id});
+                Post.deleteMany({user: targetUser._id}).exec();
                 //Delete all comments the user has made
-                Comment.deleteMany({user: targetUser._id});
+                Comment.deleteMany({user: targetUser._id}).exec();
                 
                 //Delete all comments from posts that no longer exist
                 for(let i = 0; i < userPosts.length; i++){
-                    Comment.deleteMany({post: userPosts[i]._id});
+                    Comment.deleteMany({post: userPosts[i]._id}).exec();
                 }
                 
                 return res.status(200).json({message: "User deleted. Goodbye! :)"});
@@ -237,11 +231,10 @@ router.get('/users', passport.authenticate('jwt', {session: false}), async(req, 
         if(!users){return res.status(404).json({error: "No users"});}
 
         req.user.then(userData => {
-            const activeUser = User.findById(userData._id);
             if(!userData){
                 return res.status(403).json({error: "Error!"});
             }
-            else if(activeUser.adminStatus === true){
+            else if(userData.adminStatus === true){
                 res.send(users); 
             }
             else{
