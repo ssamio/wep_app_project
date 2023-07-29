@@ -258,5 +258,18 @@ router.get('/users', passport.authenticate('jwt', {session: false}), async(req, 
     }
 });
 //Fear the super admin
+//GET username from database. This is to show it after update
+router.get('/name/:userId', passport.authenticate('jwt', {session: false}), async(req, res) =>{
+    try{
+        const targetUser = await User.findById(req.params.userId);   
+        if(!targetUser){return res.status(404).json({error: "User not found"});}
+        else {
+            res.status(200).send(targetUser.username);
+        }
+    }
+    catch(error){
+        res.status(500).json({error: "Error"});
+    }
+});
 
 module.exports = router;

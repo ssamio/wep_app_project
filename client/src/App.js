@@ -6,7 +6,6 @@ import Header from './components/Header';
 import Posts from './components/Posts';
 import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
-import Footer from './components/Footer';
 import { styled } from '@mui/material/styles';
 import Admin from './components/Admin';
 import Comments from './components/Comments';
@@ -33,12 +32,12 @@ function App() {
       <Router>
           <Responsive className="App">
             <Routes>
-              <Route  path="/" element={<><Header /> <Posts /> <Footer /></>}/>
-              <Route  path="/register" element={<><Header /> <RegisterPage /> <Footer /></>}/>
-              <Route  path="/login" element={<><Header /> <LoginPage /> <Footer /></>}/>
-              <Route  path="/post" element={<><Header /> <Comments /> <Footer /></>}/>
-              <Route  path="/admin" element={<><Header /> <Admin /> <Footer /></>}/>
-              <Route  path="/user" element={<><Header /> <UserSettings /> <Footer /></>}/>
+              <Route  path="/" element={<><Header /> <Posts /> </>}/>
+              <Route  path="/register" element={<><Header /> <RegisterPage /> </>}/>
+              <Route  path="/login" element={<><Header /> <LoginPage /> </>}/>
+              <Route  path="/post" element={<><Header /> <Comments /> </>}/>
+              <Route  path="/admin" element={<><Header /> <Admin /> </>}/>
+              <Route  path="/user" element={<><Header /> <UserSettings /> </>}/>
             </Routes>
           </Responsive>
         </Router>

@@ -1,11 +1,11 @@
 //User setting page. User can change their displayname/username and delete their account along with all the posts and comments
-import { checkAuth, getID, getUsername, logout } from "../auth";
+import { checkAuth, getID, logout } from "../auth";
 import { useState, useEffect, Suspense } from "react";
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { TextField, Button, Typography, Card, CardContent, CardActions } from "@mui/material";
 import { styled } from "@mui/material";
-import { deleteUser, changeUsername } from "../api";
+import { deleteUser, changeUsername, getUsername } from "../api";
 import { useSnackbar } from "./SnackbarContext";
 
 //Recycle the same form container as always. It works, why change.
@@ -32,10 +32,22 @@ const UserSettings = () => {
     useEffect(() => {
         setLoginState(checkAuth());
         setUserId(getID());
-        setUsername(getUsername());
-    }, [checkAuth(), getID(), getUsername()])
+        handleUsernameFetch();
+    }, [checkAuth(), getID()])
 
     const { t, i18n } = useTranslation();
+
+//Fetch username
+    const handleUsernameFetch = async() => {
+        const id = await getID();
+        const response = await getUsername(id);
+        if(response){
+            setUsername(response);
+        }
+        else{
+            return null;
+        }
+    }
 
 //Handle username change and user deletion through api functions
     const handleUsernameChange = async() => {
@@ -43,7 +55,7 @@ const UserSettings = () => {
         const response = await changeUsername(userId, payload);
         if(response === true){
             showSnackbar((t('Username changed')), 'success');
-            return navigate('/');
+            setUsername(await getUsername(userId));
         }
         else{
             showSnackbar((t('Failure')), 'error');

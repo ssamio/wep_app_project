@@ -25,6 +25,8 @@
     "Register success": "User registered succesfully! Please login.",
     "Invalid credetials": "Invalid credentials",
     "Not found": "Not found",
-    "User deleted": "User deleted! Goodbye :)",
-    "Username changed": "Username updated! Login again to apply changes."
+    "User deleted": "User deleted!",
+    "Username changed": "Username updated!",
+    "Login success": "Login successful!",
+    "Shoo": "Please leave, there is nothing for you here!"
 }

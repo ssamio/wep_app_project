@@ -44,7 +44,7 @@ export const changeUsername = async(userId, username) => {
         }
     })
     .then(({data}) => {
-        console.log(data.message);
+        //console.log(data.message);
         response = true;
     })
     .catch((error) =>{
@@ -65,7 +65,7 @@ export const deleteUser = async(userId) => {
         }
     })
     .then(({data}) => {
-        console.log(data.message);
+        //console.log(data.message);
         response = true;
     })
     .catch((error) =>{
@@ -74,3 +74,44 @@ export const deleteUser = async(userId) => {
     })
     return response;
 }
+
+//Get all users for admin panel
+export const getUsers = async() => {
+    let response;
+    const token = localStorage.getItem("auth_token");
+    if(!token) return null;
+    await api.get('/users',{
+      headers: {
+        "Authorization": "Bearer " + token
+      }  
+    })
+    .then(({data}) => {
+        response = data;
+    })
+    .catch((error) => {
+        response = null;
+        console.log(error.response.data.error);
+    })
+    return response;
+}
+
+//Get username from database
+export const getUsername = async(userId) => {
+    let response;
+    const token = localStorage.getItem("auth_token");
+    if(!token) return null;
+    await api.get('/name/' + userId,{
+      headers: {
+        "Authorization": "Bearer " + token
+      }  
+    })
+    .then(({data}) => {
+        response = data;
+    })
+    .catch((error) => {
+        response = null;
+        console.log(error.response.data.error);
+    })
+    return response;
+}
+

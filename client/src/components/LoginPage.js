@@ -38,7 +38,7 @@ const LoginPage = () => {
             const credentials = { email, password };
             const response = await login(credentials);
             if(response === true){
-                showSnackbar((t('Register success')), 'success');
+                showSnackbar((t('Login success')), 'success');
                 return navigate('/');
             }
             else{

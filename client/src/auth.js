@@ -59,23 +59,6 @@ export const getID = () => {
     }
 }
 
-//Function that returns the username
-export const getUsername = () => {
-    const token = localStorage.getItem("auth_token");
-
-    if(!token){
-        return null;
-    }
-
-    else{
-        const decoded = jwt_decode(token);
-        if(decoded.username === undefined) return null;
-        else{
-            return decoded.username;
-        }
-    }
-}
-
 //Logout the user by deleting the token
 export const logout = () => {
     return localStorage.removeItem("auth_token");

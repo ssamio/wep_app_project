@@ -25,6 +25,8 @@
     "Register success": "Käyttäjä rekisteröity onnistuneesti! Ole hyvä ja kirjaudu sisään.",
     "Invalid credetials": "Virheelliset tunnukset",
     "Not found": "Ei löydy",
-    "User deleted": "Käyttäjä poistettu! Hyvästi :)",
-    "Username changed": "Käyttäjänimi päivitetty! Kirjaudu uudestaan sisään nähdäksesi muutokset."
+    "User deleted": "Käyttäjä poistettu!",
+    "Username changed": "Käyttäjänimi päivitetty!",
+    "Login success": "Kirjautuminen onnistui!",
+    "Shoo": "Menes nyt siitä!"
 }
