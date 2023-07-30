@@ -65,7 +65,7 @@ const Header = () => {
             logout();
             setLoginState(false);
             setAdminState(false);
-            return navigate("/");
+            return navigate("/login");
             
         }
         else{

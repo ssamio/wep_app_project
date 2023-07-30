@@ -43,7 +43,6 @@ const Posts = () => {
     const [title, setTitle] = useState('');
     const [posts, setPosts] = useState([]);
     const { showSnackbar } = useSnackbar();
-
     //Check privileges, fetch posts
     useEffect(() => {
         setLoginState(checkAuth());
