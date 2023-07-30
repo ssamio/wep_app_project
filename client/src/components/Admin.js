@@ -6,7 +6,6 @@ import { TextField, Button, Typography, Card, CardContent, CardActions } from "@
 import { deleteUser, changeUsername, getUsers } from "../api";
 import { useTranslation } from 'react-i18next';
 import { styled } from "@mui/material";
-import { useLocation } from 'react-router-dom';
 
 //Upcycle the form container to div container :D 
 const CardContainer = styled('div')(({ theme }) => ({
@@ -25,16 +24,12 @@ const Admin = () => {
     const [text, setText] = useState([]);
     const [users, setUsers] = useState([]);
     const { showSnackbar } = useSnackbar();
-    const location = useLocation();
-//Check privileges
+//Check privileges, fetch users
     useEffect(() => {
         setLoginState(checkAuth());
         setAdminState(checkAdmin());
-    }, [loginState, adminState])
-//Fetch users
-    useEffect(() => {
         handleUserFetch();
-    }, [location.pathname]);
+    }, [loginState, adminState])
     
     const { t, i18n } = useTranslation();
     
@@ -90,6 +85,12 @@ const Admin = () => {
                     <Card key={user._id}>
                         <CardContent>
                             <Typography>{user.username}</Typography>
+                            {
+                                user.username === user.email ?
+                                <></>
+                                :
+                                <Typography>{user.email}</Typography>
+                            }
                             <TextField type="text" placeholder={t('Username')} value={text[index].value} onChange={(e) => handleChange(e, index)} />
                         </CardContent>
                         <CardActions>
