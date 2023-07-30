@@ -42,7 +42,7 @@ const Header = () => {
     useEffect(() => {
         setLoginState(checkAuth());
         setAdminState(checkAdmin());
-    }, [checkAuth(), checkAdmin()])
+    })
 
     //The header handles translation change and user login/logout. Uses function fropm auth to achieve this.
     const { t, i18n } = useTranslation();
@@ -63,6 +63,8 @@ const Header = () => {
         const status = checkAuth();
         if(status){
             logout();
+            setLoginState(false);
+            setAdminState(false);
             return navigate("/");
             
         }

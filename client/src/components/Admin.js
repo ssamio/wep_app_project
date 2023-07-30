@@ -12,11 +12,20 @@ const CardContainer = styled('div')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(2),
-    maxWidth: '400px',
+    width: '50%',
     margin: 'auto',
     padding: theme.spacing(4),
     borderRadius: theme.spacing(1)
 }));
+//Style the cards
+const cardStyles = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 'auto',
+    width: '60%'
+};
 
 const Admin = () => {
     const [loginState, setLoginState] = useState(false);
@@ -83,14 +92,14 @@ const Admin = () => {
         <CardContainer>
             {
                 users.map((user, index) => (
-                    <Card key={user._id}>
+                    <Card sx={cardStyles} key={user._id}>
                         <CardContent>
-                            <Typography>{user.username}</Typography>
+                            <Typography>{t('Email')}: {user.email}</Typography>
                             {
                                 user.username === user.email ?
                                 <></>
                                 :
-                                <Typography>{user.email}</Typography>
+                                <Typography>{t('Username')}: {user.username}</Typography>
                             }
                             <TextField type="text" placeholder={t('Username')} value={text[index].value} onChange={(e) => handleChange(e, index)} />
                         </CardContent>

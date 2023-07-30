@@ -13,12 +13,20 @@ const FormContainer = styled('form')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(2),
-    maxWidth: '400px',
+    width: '50%',
     margin: 'auto',
     padding: theme.spacing(4),
-    borderRadius: theme.spacing(1),
-    boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)',
+    borderRadius: theme.spacing(1)
 }));
+//Style the cards
+const cardStyles = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 'auto',
+    width: '60%'
+};
 
 const UserSettings = () => {
     const [loginState, setLoginState] = useState(false);
@@ -33,7 +41,7 @@ const UserSettings = () => {
         setLoginState(checkAuth());
         setUserId(getID());
         handleUsernameFetch();
-    }, [checkAuth(), getID()])
+    }, [loginState, userId])
 
     const { t, i18n } = useTranslation();
 
@@ -81,7 +89,7 @@ const UserSettings = () => {
                 loginState ?
                 <>
                     <Typography>{t('Settings title')} {username}</Typography>
-                    <Card variant="outlined">
+                    <Card sx={cardStyles}>
                         <CardContent>
                             <Typography>{t('Username change')}</Typography>
                             <TextField type="text" placeholder={t('Username')} value={text} onChange={(e) => setText(e.target.value)} />
@@ -90,7 +98,7 @@ const UserSettings = () => {
                             <Button onClick={handleUsernameChange} variant="contained">{t('Submit')}</Button>
                         </CardActions>
                     </Card>
-                    <Card variant="outlined" color="error">
+                    <Card sx={cardStyles}>
                         <Typography color="error">{t('Danger')}</Typography>
                         <CardContent>
                             <Typography>{t('Delete user')}</Typography>

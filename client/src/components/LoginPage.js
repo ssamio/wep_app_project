@@ -12,7 +12,7 @@ const FormContainer = styled('form')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(2),
-    maxWidth: '400px',
+    width: '40%',
     margin: 'auto',
     padding: theme.spacing(4),
     borderRadius: theme.spacing(1),
@@ -52,7 +52,7 @@ const LoginPage = () => {
             <Typography>{t('Login title')}</Typography>
             <TextField type="text" placeholder={t('Email')} value={email} onChange={(e) => setEmail(e.target.value)} />
             <TextField type="password" placeholder={t('Password')} value={password} onChange={(e) => setPassword(e.target.value)} />
-            <Button onClick={handleLogin}>{t('Login')}</Button>
+            <Button variant="contained" onClick={handleLogin}>{t('Login')}</Button>
         </FormContainer>
     )
 }

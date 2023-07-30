@@ -12,7 +12,7 @@ const FormContainer = styled('form')(({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(2),
-    maxWidth: '400px',
+    width: '40%',
     margin: 'auto',
     padding: theme.spacing(4),
     borderRadius: theme.spacing(1),
@@ -29,7 +29,7 @@ const RegisterPage = () => {
     //Check user login state. Logged in user's cannot submit the form.
     useEffect(() => {
         setLoginState(checkAuth());
-    }, [checkAuth()])
+    }, [loginState])
 
     const { t, i18n } = useTranslation();
     //Handle user registration. On success redirect to login page and show success alert. On failure show failure alert.
@@ -53,7 +53,7 @@ const RegisterPage = () => {
             <Typography>{t('Register title')}</Typography>
             <TextField type="text" placeholder={t('Email')} value={email} onChange={(e) => setEmail(e.target.value)} />
             <TextField type="password" placeholder={t('Password')} value={password} onChange={(e) => setPassword(e.target.value)} />
-            <Button onClick={handleRegister}>{t('Register')}</Button>
+            <Button variant="contained" onClick={handleRegister}>{t('Register')}</Button>
         </FormContainer>
     )
 }

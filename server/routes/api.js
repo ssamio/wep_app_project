@@ -7,7 +7,7 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
 
-const textValidate = () => body('text').isString().exists().trim().bail();
+const textValidate = () => body('text').isString().exists().bail();
 const titleValidate = () => body('title').isString().exists().trim().bail();
 const postIDValidate = () => body('post').isString().exists().trim().bail();
 const usernameValidate = () => body('username').isString().exists().trim().bail();
@@ -63,8 +63,8 @@ router.delete('/post/:postId', passport.authenticate('jwt', {session: false}), a
         if(!post){return res.status(404).json({error: "Post not found"});}
         
         req.user.then(userData => {
-            if(userData.id.equals(post.user) || userData.adminStatus === true){
-                post.deleteOne().exec();
+            if(userData._id.equals(post.user) || userData.adminStatus === true){
+                post.deleteOne();
                 Comment.deleteMany({post: post._id}).exec();
                 return res.status(200).json({message: "Post deleted!"});
 
@@ -133,7 +133,7 @@ router.delete('/comment/:commentId', passport.authenticate('jwt', {session: fals
 
         req.user.then(userData => {
             if(userData._id.equals(comment.user) || userData.adminStatus === true){
-                comment.deleteOne().exec();
+                comment.deleteOne();
                 return res.status(200).json({message: "Comment deleted!"});
 
             }

@@ -28,5 +28,16 @@
     "User deleted": "User deleted!",
     "Username changed": "Username updated!",
     "Login success": "Login successful!",
-    "Shoo": "Please leave, there is nothing for you here!"
+    "Shoo": "Please leave, there is nothing for you here!",
+    "Title": "Title",
+    "Code": "Code",
+    "New post": "New Post",
+    "No posts": "No posts yet. How about you log in and make one :)",
+    "Created": "Created",
+    "Updated": "Edited",
+    "Edit": "Edit",
+    "Comments": "View comments",
+    "Post deleted": "Post deleted",
+    "Comment deleted": "Comment deleted",
+    "Submit new post": "Submit new post"
 }

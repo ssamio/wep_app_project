@@ -28,5 +28,17 @@
     "User deleted": "Käyttäjä poistettu!",
     "Username changed": "Käyttäjänimi päivitetty!",
     "Login success": "Kirjautuminen onnistui!",
-    "Shoo": "Menes nyt siitä!"
+    "Shoo": "Menes nyt siitä!",
+    "Title": "Otsikko",
+    "Code": "Koodi",
+    "New post": "Uusi postaus",
+    "No posts": "Ei vielä postauksia. Mitäpä jos kirjautuisit sisään ja tekisit yhden :)",
+    "Created": "Luotu",
+    "Updated": "Muokattu",
+    "Edit": "Muokkaa",
+    "Comments": "Näytä kommentit",
+    "Post deleted": "Postaus poistettu",
+    "Comment deleted": "Kommentti poistettu",
+    "Submit new post": "Lähetä uusi postaus"
+
 }
