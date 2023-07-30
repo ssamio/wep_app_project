@@ -25,14 +25,14 @@ const LoginPage = () => {
     const [loginState, setLoginState] = useState(false);
     const navigate = useNavigate();
     const { showSnackbar } = useSnackbar();
-//Check user's login status. Logged in user's cannot submit the login form
+    //Check user's login status. Logged in user's cannot submit the login form
     useEffect(() => {
         setLoginState(checkAuth());
     }, [checkAuth()])
 
     const { t, i18n } = useTranslation();
 
-//Handle login, on success navigates to front page and displays an alert with success message. On failure show failure alert to user.
+    //Handle login, on success navigates to front page and displays an alert with success message. On failure show failure alert to user.
     const handleLogin = async () => {
         if(!loginState){
             const credentials = { email, password };
@@ -46,7 +46,7 @@ const LoginPage = () => {
             }
         }        
     }; 
-//Simple login form using the custom component
+    //Simple login form using the custom component
     return (
         <FormContainer>
             <Typography>{t('Login title')}</Typography>

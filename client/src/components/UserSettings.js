@@ -28,7 +28,7 @@ const UserSettings = () => {
     const navigate = useNavigate();
     const { showSnackbar } = useSnackbar();
 
-//Check user's login status and get id
+    //Check user's login status and get id
     useEffect(() => {
         setLoginState(checkAuth());
         setUserId(getID());
@@ -37,7 +37,7 @@ const UserSettings = () => {
 
     const { t, i18n } = useTranslation();
 
-//Fetch username
+    //Fetch username
     const handleUsernameFetch = async() => {
         const id = await getID();
         const response = await getUsername(id);
@@ -49,7 +49,7 @@ const UserSettings = () => {
         }
     }
 
-//Handle username change and user deletion through api functions
+    //Handle username change and user deletion through api functions
     const handleUsernameChange = async() => {
         const payload = {username: text};
         const response = await changeUsername(userId, payload);
@@ -74,7 +74,7 @@ const UserSettings = () => {
         }
     }
 
-//Conditional rendering to produce a user settings form
+    //Conditional rendering to produce a user settings form
     return (
         <FormContainer>
             {

@@ -25,13 +25,14 @@ const RegisterPage = () => {
     const [loginState, setLoginState] = useState(false);
     const navigate = useNavigate();
     const { showSnackbar } = useSnackbar();
-//Check user login state. Logged in user's cannot submit the form.
+    
+    //Check user login state. Logged in user's cannot submit the form.
     useEffect(() => {
         setLoginState(checkAuth());
     }, [checkAuth()])
 
     const { t, i18n } = useTranslation();
-//Handle user registration. On success redirect to login page and show success alert. On failure show failure alert.
+    //Handle user registration. On success redirect to login page and show success alert. On failure show failure alert.
     const handleRegister = async () => {
         if(!loginState){
             const credentials = { email, password };
@@ -46,7 +47,7 @@ const RegisterPage = () => {
             }
         }        
     }; 
-//Registration form using the custom component
+    //Registration form using the custom component
     return (
         <FormContainer>
             <Typography>{t('Register title')}</Typography>

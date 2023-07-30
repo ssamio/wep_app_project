@@ -24,12 +24,13 @@ const Admin = () => {
     const [text, setText] = useState([]);
     const [users, setUsers] = useState([]);
     const { showSnackbar } = useSnackbar();
-//Check privileges, fetch users
+    
+    //Check privileges, fetch users
     useEffect(() => {
         setLoginState(checkAuth());
         setAdminState(checkAdmin());
         handleUserFetch();
-    }, [loginState, adminState])
+    }, [loginState, adminState]);
     
     const { t, i18n } = useTranslation();
     
@@ -48,7 +49,7 @@ const Admin = () => {
         
     }
 
-    //Handle username change and user deletion through api functions
+    //Handle username change and user deletion through 
     const handleUsernameChange = async(userId, index) => {
         const payload = {username: text[index].value};
         const response = await changeUsername(userId, payload);
@@ -71,7 +72,7 @@ const Admin = () => {
             showSnackbar((t('Failure')), 'error');
         }
     }
-//Handle text field changes
+    //Handle text field changes
     const handleChange = (e, index) => {
         const values = [...text];
         values[index].value = e.target.value;

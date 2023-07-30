@@ -38,19 +38,19 @@ const Header = () => {
     const [loginState, setLoginState] = useState(false);
     const [adminState, setAdminState] = useState(false);
     const navigate = useNavigate();
-//Track user's login and admin status
+    //Track user's login and admin status
     useEffect(() => {
         setLoginState(checkAuth());
         setAdminState(checkAdmin());
     }, [checkAuth(), checkAdmin()])
 
-//The header handles translation change and user login/logout. Uses function fropm auth to achieve this.
+    //The header handles translation change and user login/logout. Uses function fropm auth to achieve this.
     const { t, i18n } = useTranslation();
 
     const changeLanguage = (lang) =>{
         i18n.changeLanguage(lang);
     }
-//Menu interaction functions
+    //Menu interaction functions
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -58,7 +58,7 @@ const Header = () => {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
-//Handle user logout
+    //Handle user logout
     const handleLogOut = () => {
         const status = checkAuth();
         if(status){
@@ -70,7 +70,7 @@ const Header = () => {
             return null;
         }
     }
-//Memo used to display menu items in collapsed menu
+    //Memo used to display menu items in collapsed menu
     const menuItems = useMemo(() => {
         const items = [];
         items.push(<MenuItem key={0} component={Link} to="/" onClick={handleMenuClose}>{t('Home')}</MenuItem>);
@@ -88,7 +88,7 @@ const Header = () => {
         return items;
     }, [loginState, adminState]);
 
-//Header with conditional buttons, depending on the user's login and admin states. Displays a collapsed menu if screen size is small enough
+    //Header with conditional buttons, depending on the user's login and admin states. Displays a collapsed menu if screen size is small enough
     return (
         <ResponsiveAppBar position="static">
             <CustomToolbar >

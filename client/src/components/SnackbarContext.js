@@ -25,7 +25,7 @@ export function SnackbarProvider({ children }) {
     }
     setOpen(false);
   };
-//Return this component
+  //Return this component
   return (
     <SnackbarContext.Provider
       value={{
