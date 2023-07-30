@@ -36,9 +36,10 @@
     "Created": "Created",
     "Updated": "Edited",
     "Edit": "Edit",
-    "Comments": "View comments",
+    "Comments": "Comments",
     "Post deleted": "Post deleted",
     "Comment deleted": "Comment deleted",
     "Submit new post": "Submit new post",
-    "Comment": "Comment"
+    "Comment": "Comment",
+    "New comment": "New Comment"
 }

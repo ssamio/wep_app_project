@@ -48,11 +48,11 @@ const Admin = () => {
         const response = await getUsers();
         if(adminState && loginState){
             if(response){
-            setUsers(response);
-            setText(response.map((item) => ({id: item._id, value: ''})));
+                setUsers(response);
+                setText(response.map((item) => ({id: item._id, value: ''})));
             }
             else{
-            showSnackbar((t('Failure')), 'error');
+                showSnackbar((t('Failure')), 'error');
             }
         }
         

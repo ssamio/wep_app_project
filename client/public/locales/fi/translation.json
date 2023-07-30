@@ -36,10 +36,11 @@
     "Created": "Luotu",
     "Updated": "Muokattu",
     "Edit": "Muokkaa",
-    "Comments": "Näytä kommentit",
+    "Comments": "Kommentit",
     "Post deleted": "Postaus poistettu",
     "Comment deleted": "Kommentti poistettu",
     "Submit new post": "Lähetä uusi postaus",
-    "Comment": "Kommentti"
+    "Comment": "Kommentti",
+    "New comment": "Uusi kommentti"
 
 }

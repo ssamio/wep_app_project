@@ -21,6 +21,20 @@ export const getPosts = async() => {
     return response;
 }
 
+//Fetch single post
+export const getPost = async(postId) => {
+    let response;
+    await api.get('/post/' + postId)
+    .then(({data}) => {
+        response = data;
+    })
+    .catch((error) => {
+        response = null;
+        console.log(error.response.data.error);
+    })
+    return response;
+}
+
 //Fetch comments of a given post
 export const getComments = async(postId) => {
     let response; 
@@ -57,7 +71,7 @@ export const changeUsername = async(userId, username) => {
     return response;
 }
 
-//Delete user API call
+//Delete user 
 export const deleteUser = async(userId) => {
     let response;
     const token = localStorage.getItem("auth_token");
@@ -178,6 +192,71 @@ export const editPost = async(postId, content) => {
         response = true;
     })
     .catch((error) =>{
+        response = false;
+        console.log(error.response.data.error);
+    })
+    return response;
+}
+
+//Edit comment
+export const editComment = async(commentId, content) => {
+    let response;
+    const token = localStorage.getItem("auth_token");
+    if(!token) return null;
+    await api.put('/comment/' + commentId, content, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(({data}) => {
+        console.log(data.message);
+        response = true;
+    })
+    .catch((error) =>{
+        response = false;
+        console.log(error.response.data.error);
+    })
+    return response;
+}
+
+//Delete comment
+export const deleteComment = async(commentId) => {
+    let response;
+    const token = localStorage.getItem("auth_token");
+    if(!token) return null;
+    await api.delete('/comment/' + commentId, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        }
+    })
+    .then(({data}) => {
+        console.log(data.message);
+        response = true;
+    })
+    .catch((error) =>{
+        response = false;
+        console.log(error.response.data.error);
+    })
+    return response;
+}
+
+//Post a new comment
+export const postComment = async(content) => {
+    let response;
+    const token = localStorage.getItem("auth_token");
+    if(!token) return null;
+    await api.post('/comment', content, {
+        headers: {
+            "Authorization": "Bearer " + token
+      } 
+    })
+    .then(({data}) => {
+        response = true;
+        console.log(data.message);
+    })
+    .catch((error) => {
         response = false;
         console.log(error.response.data.error);
     })

@@ -7,9 +7,9 @@ const User = require('../models/User');
 const Post = require('../models/Post');
 const Comment = require('../models/Comment');
 
-const textValidate = () => body('text').isString().exists().bail();
+const textValidate = () => body('text').isString().exists().trim().bail();
+const codeValidate = () => body('text').isString().exists().bail();
 const titleValidate = () => body('title').isString().exists().trim().bail();
-const postIDValidate = () => body('post').isString().exists().trim().bail();
 const usernameValidate = () => body('username').isString().exists().trim().bail();
 
 
@@ -21,6 +21,17 @@ router.get('/posts', async(req, res) => {
    }
    else{
     res.status(404).json({error: "Posts not found"});
+   }
+});
+
+//GET a single post by id
+router.get('/post/:postId', async(req, res) => {
+   const post = await Post.findById(req.params.postId).populate('user', 'username');
+   if(post){
+    res.send(post);
+   }
+   else{
+    res.status(404).json({error: "Post not found"});
    }
 });
 
@@ -36,7 +47,7 @@ router.get('/comments/:postId', async(req, res) =>{
 });
 
 //POST for new post
-router.post('/post', textValidate(), titleValidate(), passport.authenticate('jwt', {session: false}), async(req, res) =>{
+router.post('/post', codeValidate(), titleValidate(), passport.authenticate('jwt', {session: false}), async(req, res) =>{
     //Validate content
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -79,7 +90,7 @@ router.delete('/post/:postId', passport.authenticate('jwt', {session: false}), a
     }
 });
 //PUT for post
-router.put('/post/:postId', textValidate(), titleValidate(), passport.authenticate('jwt', {session: false}), async(req, res) =>{
+router.put('/post/:postId', codeValidate(), titleValidate(), passport.authenticate('jwt', {session: false}), async(req, res) =>{
     //Validate content
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -105,7 +116,7 @@ router.put('/post/:postId', textValidate(), titleValidate(), passport.authentica
     }
 });
 //POST for new comment
-router.post('/comment', textValidate(), postIDValidate(), passport.authenticate('jwt', {session: false}), (req, res) =>{
+router.post('/comment', textValidate(), passport.authenticate('jwt', {session: false}), (req, res) =>{
     //Validate content
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -157,9 +168,9 @@ router.put('/comment/:commentId', textValidate(), passport.authenticate('jwt', {
         const comment = await Comment.findById(req.params.commentId);
         if(!comment){return res.status(404).json({error: "Comment not found"});}
 
-        const { text} = req.body; 
+        const { text } = req.body; 
         req.user.then(userData => {
-            if(userData._id.equals(post.user) || userData.adminStatus === true){
+            if(userData._id.equals(comment.user) || userData.adminStatus === true){
                 comment.updateOne({text: text}).exec();
                 return res.status(200).json({message: "Comment updated!"});
             }

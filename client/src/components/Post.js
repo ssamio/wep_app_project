@@ -1,10 +1,11 @@
 //Single post component, with code highlighting
-import { useState, Suspense } from "react";
-import { TextField, Button, Typography, Card, CardContent, CardActions, Chip, CardHeader } from "@mui/material";
+import { useState } from "react";
+import { TextField, Button, Typography, Card, CardContent, CardActions } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 import { deletePost, editPost } from "../api";
 import { useSnackbar } from "./SnackbarContext";
 import EditPostDialog from './EditPostDialog';
+import CommentDialog from "./CommentDialog";
 
 //Style the cards
 const cardStyles = {
@@ -18,7 +19,10 @@ const cardStyles = {
 
 const Post = ({item, admin, login, userId, parentFunction}) => {
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [commentOpen, setCommentOpen] = useState(false);
     const { showSnackbar } = useSnackbar();
+
+    const { t, i18n } = useTranslation();
 
     //Handle edit and delete post
     const handlePostDelete = async(postId) => {
@@ -41,26 +45,36 @@ const Post = ({item, admin, login, userId, parentFunction}) => {
         setDialogOpen(false);
     };
 
+    //Handle the comment dialog open and close
+    const handleOpenCommentDialog = () => {
+        setCommentOpen(true);
+    };
+
+    const handleCloseCommentDialog = () => {
+        setCommentOpen(false);
+    };
+
     const handlePostEdit = async(text, title) => {
         if(login){
             const content = { title, text };
             const response = await editPost(item._id, content);
             if(response === true){
                 showSnackbar((t('Succeess')), 'success');
-                return parentFunction() 
+                return parentFunction(); 
             }
             else {
-            return showSnackbar((t('Failure')), 'error');
+                return showSnackbar((t('Failure')), 'error');
             }
         }
     };
 
-    const { t, i18n } = useTranslation();
+
     //Post component with editing dialog 
     return (
         <Card sx={cardStyles}>
             <CardContent style = {{width: '90%'}}>
-                <Typography>{item.title}</Typography>
+                <Typography>{t('Title')}: {item.title}</Typography>
+                <Typography>{t('Username')}: {item.user.username}</Typography>
                 <TextField  
                     fullWidth
                     multiline rows={10}
@@ -86,11 +100,11 @@ const Post = ({item, admin, login, userId, parentFunction}) => {
                 <CardActions>
                     <Button onClick={() => handlePostDelete(item._id)} variant="contained" color="error">{t('Delete')}</Button>
                     <Button onClick={handleOpenDialog} variant="contained">{t('Edit')}</Button>
-                    <Button variant="contained">{t('Comments')}</Button>
+                    <Button onClick={handleOpenCommentDialog} variant="contained">{t('Comments')}</Button>
                 </CardActions>
                 :
                 <CardActions>
-                    <Button variant="contained">{t('Comments')}</Button>
+                    <Button onClick={handleOpenCommentDialog} variant="contained">{t('Comments')}</Button>
                 </CardActions>
             }
             <EditPostDialog
@@ -99,6 +113,14 @@ const Post = ({item, admin, login, userId, parentFunction}) => {
                 open={dialogOpen}
                 onClose={handleCloseDialog}
                 onTextSubmit={handlePostEdit}
+            />
+            <CommentDialog 
+                open={commentOpen}
+                onClose={handleCloseCommentDialog}
+                postId={item._id}
+                userId={userId}
+                login={login}
+                admin={admin}
             />
         </Card>
     )

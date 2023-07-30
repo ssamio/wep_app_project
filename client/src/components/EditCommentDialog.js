@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-const EditCommentDialog = ({ text, open, onClose, onTextSubmit }) => {
+const EditCommentDialog = ({ text, post, open, onClose, onTextSubmit }) => {
   const [editedText, setEditedText] = useState(text);
 
   const { t, i18n } = useTranslation();
@@ -10,14 +10,9 @@ const EditCommentDialog = ({ text, open, onClose, onTextSubmit }) => {
   const handleTextChange = (event) => {
     setEditedText(event.target.value);
   };
-  
-  const handleTitleChange = (event) => {
-    setEditedTitle(event.target.value);
-  };
-
 
   const handleSubmit = () => {
-    onTextSubmit(editedText);
+    onTextSubmit(editedText, post);
     onClose();
   };
 

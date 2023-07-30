@@ -8,7 +8,6 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import { styled } from '@mui/material/styles';
 import Admin from './components/Admin';
-import Comments from './components/Comments';
 import UserSettings from './components/UserSettings';
 
 //Make app responsive to screen size
@@ -35,7 +34,6 @@ function App() {
               <Route  path="/" element={<><Header /> <Posts /> </>}/>
               <Route  path="/register" element={<><Header /> <RegisterPage /> </>}/>
               <Route  path="/login" element={<><Header /> <LoginPage /> </>}/>
-              <Route  path="/post" element={<><Header /> <Comments /> </>}/>
               <Route  path="/admin" element={<><Header /> <Admin /> </>}/>
               <Route  path="/user" element={<><Header /> <UserSettings /> </>}/>
             </Routes>
