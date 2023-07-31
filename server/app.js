@@ -38,11 +38,13 @@ if(process.env.NODE_ENV === "production"){
     res.sendFile(path.resolve("..", "client", "build", "index.html")));
 }
 
-//Remove below before entering real world
-var corsOptions ={
+if(process.env.NODE_ENV === "development"){
+    var corsOptions ={
     origin: "http://localhost:3000",
     optionsSuccessStatus: 200,
-};
+    };
+}
+
 
 app.use(cors(corsOptions));
 
