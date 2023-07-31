@@ -1,6 +1,7 @@
 <h1>Advanced web applications course project</h1>
 <h2>Lappeenranta University of Technology - Summer 2023</h2>
 <h3>Technologies used</h3>
+<h3>!!! Use Node v24 or above to run !!!</h3>
 <p>
   This project consists of Express.js backend that serves a React frontend. The backend database is a MongoDB database, 
   which connects to the Express.js backend with the MongoDB driver and Mongoose; this stack was used many times during the course, 
@@ -38,7 +39,7 @@
 </li>
 <h3>Installation</h3>
 <p>
-  The project's frontend needs to be built with <code>cd client && npm run build</code> ran from the root folder. The server folder requires a <code>.env</code> file that specifies
+  Download the code and run <code>npm install</code>. Note that the required Node version is 14 or later. The project's frontend needs to be built with <code>cd client && npm run build</code> ran from the root folder. The server folder requires a <code>.env</code> file that specifies
   a SECRET and PORT for the backend <code>SECRET="yourSecretStringGoesHere" PORT="yourFavouritePortNumber"</code>. Finally the app can be deployed by running 
   <code>NODE_ENV=production npm start</code> in the root folder. The frontend's default port is 3000, and the app can be accessed from there within your domain (localhost or whatever you are deploying to)
 </p>
