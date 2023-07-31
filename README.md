@@ -1,7 +1,7 @@
 <h1>Advanced web applications course project</h1>
 <h2>Lappeenranta University of Technology - Summer 2023</h2>
 <h3>Technologies used</h3>
-<h3>!!! Use Node v24 or above to run !!!</h3>
+<h3>!!! Use Node v14 or above to run !!!</h3>
 <p>
   This project consists of Express.js backend that serves a React frontend. The backend database is a MongoDB database, 
   which connects to the Express.js backend with the MongoDB driver and Mongoose; this stack was used many times during the course, 
